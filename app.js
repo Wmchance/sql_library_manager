@@ -37,9 +37,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
+// Add static middleware
+app.use('/static', express.static('public'));
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  next(createError(404));
+  next(createError(404, 'Sorry, but it looks like that location does not exsit'));
 });
 
 // error handler
