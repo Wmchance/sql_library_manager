@@ -9,6 +9,21 @@ const usersRouter = require('./routes/users');
 
 const app = express();
 
+const { sequelize } = require('./models/index'); // import the instance of sequelize that was instantiated in models/index.js
+
+(async () => {
+  try {
+    //asynchronously connect to the database and log out a message indicating that a connection has/hasn’t been established
+    await sequelize.authenticate();
+    console.log('Connection has been established successfully.');
+    //sync all models with the database
+    await sequelize.sync();
+    console.log("All models were synchronized successfully.");
+  } catch (error) {
+    console.error('Unable to connect to the database:', error);
+  }
+})();
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
