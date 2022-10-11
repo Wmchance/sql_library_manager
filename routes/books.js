@@ -45,7 +45,13 @@ router.post('/', asyncHandler(async (req, res) => {
 
 /* (Read/GET) Shows book detail form */
 router.get('/:id', asyncHandler(async (req, res) => {
-  const book = await Book.findByPk(req.params.id); //get all the books, and store them in a variable
+  const book = await Book.findByPk(req.params.id); //get find the book, and store in a variable
+  res.render('update-book', { book });
+}));
+
+router.post('/:id', asyncHandler(async (req, res) => {
+  const book = await Book.findByPk(req.params.id); //get find the book, and store in a variable
+  await book.update(req.body);
   res.render('update-book', { book });
 }));
 
