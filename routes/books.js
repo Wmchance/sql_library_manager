@@ -15,10 +15,17 @@ function asyncHandler(cb){
   }
 }
 
-/* GET books page. */
+/* GET all books table. */
 router.get('/', asyncHandler(async (req, res) => {
   const books = await Book.findAll(); //get all the books, and store them in a variable
   res.render('books', { books });
+  //res.json(books); //display the books on a webpage
+}));
+
+/* Create new book form */
+router.get('/new', asyncHandler(async (req, res) => {
+  //const books = await Book.findAll(); //get all the books, and store them in a variable
+  res.render('new-book');
   //res.json(books); //display the books on a webpage
 }));
 

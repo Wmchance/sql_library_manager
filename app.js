@@ -8,7 +8,6 @@ const logger = require('morgan');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const booksRouter = require('./routes/books');
-const newBookRouter = require('./routes/newBook');
 
 const app = express();
 
@@ -41,7 +40,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/books', booksRouter);
-app.use('/books/new', newBookRouter);
 
 // Add static middleware
 app.use('/static', express.static('public'));
