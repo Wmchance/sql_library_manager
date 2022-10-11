@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const Book = require('../models').Book;
+//const Book = require('../models').Book;
 
 /* Handler function to wrap each route. */
 function asyncHandler(cb){
@@ -15,11 +15,11 @@ function asyncHandler(cb){
   }
 }
 
-/* GET home page. */
+/* GET books/new page. */
 router.get('/', asyncHandler(async (req, res) => {
-  // res.render('index', { title: 'Express' });
-  const books = await Book.findAll(); //get all the books, and store them in a variable
-  res.json(books); //display the books on a webpage
+  //const books = await Book.findAll(); //get all the books, and store them in a variable
+  res.render('new-book');
+  //res.json(books); //display the books on a webpage
 }));
 
 module.exports = router;

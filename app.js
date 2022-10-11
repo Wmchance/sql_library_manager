@@ -4,9 +4,11 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
+// Route file paths
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const booksRouter = require('./routes/books');
+const newBookRouter = require('./routes/newBook');
 
 const app = express();
 
@@ -35,9 +37,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// URLs and routes to use together
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/books', booksRouter)
+app.use('/books', booksRouter);
+app.use('/books/new', newBookRouter);
 
 // Add static middleware
 app.use('/static', express.static('public'));
