@@ -15,19 +15,35 @@ function asyncHandler(cb){
   }
 }
 
-/* (Read) GET all books table. */
+/* (Read/GET) View all books table. */
 router.get('/', asyncHandler(async (req, res) => {
   const books = await Book.findAll(); //get all the books, and store them in a variable
   res.render('books', { books });
   //res.json(books); //display the books on a webpage
 }));
 
-/* (Create) Create new book form */
+/* (Read/GET) Create new book form */
 router.get('/new', asyncHandler(async (req, res) => {
   res.render('new-book');
 }));
 
-/* (Read) Shows book detail form */
+/* (Create/POST) Create new book entry. */
+router.post('/', asyncHandler(async (req, res) => {
+  let newBook;
+  try {
+    newBook = await Book.create(req.body);
+    res.redirect("/books/" + newBook.id);
+  } catch (error) {
+    if(error.name === "SequelizeValidationError") {
+      newBook = await Book.build(req.body);
+      res.render("books/new", { newBook, errors: error.errors, title: "New Book" })
+    } else {
+      throw error;
+    }  
+  }
+}));
+
+/* (Read/GET) Shows book detail form */
 router.get('/:id', asyncHandler(async (req, res) => {
   const book = await Book.findByPk(req.params.id); //get all the books, and store them in a variable
   res.render('update-book', { book });
