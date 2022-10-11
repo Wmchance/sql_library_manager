@@ -1,2 +1,3 @@
 - Finish error handling customization
 - Why doesn't new book buttons and input fields line up like in example
+- Fix error handling for /* (Create/POST) Create new book entry. */
