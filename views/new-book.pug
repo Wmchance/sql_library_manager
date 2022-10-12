@@ -1,12 +1,7 @@
 extends layout
 
 block content
-    
     h1 New Book 
-
-    //- if error
-    //-     each item in error.errors
-    //-         h1= item.message
 
     form(action="/books/new" method="post")
         if error 
