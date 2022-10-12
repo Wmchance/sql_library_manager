@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { Op } = require("sequelize");
 
 const Book = require('../models').Book;
 
@@ -32,7 +33,28 @@ router.post('/', asyncHandler(async (req, res) => {
   } else {
     books = await Book.findAll({
       where: {
-        id: searchVal
+        [Op.or]: [
+          {
+            title: {
+              [Op.substring]: `${searchVal}`
+            }
+          },
+          {
+            author: {
+              [Op.substring]: `${searchVal}`
+            }
+          },
+          {
+            genre: {
+              [Op.substring]: `${searchVal}`
+            }
+          },
+          {
+            year: {
+              [Op.substring]: `${searchVal}`
+            }
+          },
+        ]
       }
     });
     searchVal = "";
