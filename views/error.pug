@@ -1,6 +1,12 @@
 extends layout
 
 block content
+  h1 Sorry, there was a problem retriving that information. 
+  p Please try going back to the main books list.
+  br
+  p 
+      a.button(href="/books") Go to Books list
+  br
   h1= message
   h2= error.status
   pre #{error.stack}
