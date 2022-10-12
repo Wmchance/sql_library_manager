@@ -1,8 +1,19 @@
 extends layout
 
 block content
+    
     h1 New Book 
-    form(action="/books/new" method="post" onsubmit="return alert('New book added!');")
+
+    //- if error
+    //-     each item in error.errors
+    //-         h1= item.message
+
+    form(action="/books/new" method="post")
+        if error 
+            h2.error Oooops! 
+            ul.error
+                each item in error.errors 
+                    li= item.message
         p 
             label(for="title") Title
             input(name="title" type="text" id="title")
