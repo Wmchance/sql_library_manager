@@ -18,7 +18,7 @@ function asyncHandler(cb){
 /* (Read/GET) View all books table. */
 router.get('/', asyncHandler(async (req, res) => {
   const books = await Book.findAll(); //get all the books, and store them in a variable
-  res.render('books', { books });
+  res.render('index', { books });
   //res.json(books); //display the books on a webpage
 }));
 

@@ -1,3 +1,1 @@
 - Why doesn't new book buttons and input fields line up like in example
-- Fix error handling for /* (Create/POST) Create new book entry. */ in routes>books.js
-- Fix error handling for /* (Update/POST) Update existing book entry. */ in routes>books.js
