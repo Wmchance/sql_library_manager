@@ -45,8 +45,16 @@ router.post('/new', asyncHandler(async (req, res) => {
 
 /* (Read/GET) Shows book detail form */
 router.get('/:id', asyncHandler(async (req, res) => {
-  const book = await Book.findByPk(req.params.id); //get find the book, and store in a variable
-  res.render('update-book', { book });
+  const book = await Book.findByPk(req.params.id); //get the book, and store in a variable
+  if(book) {
+    res.render('update-book', { book });
+  } else {
+    // catch 404 and forward to error handler
+    const err = new Error(); 
+        err.status = 404; 
+        err.message = 'Sorry, but it looks like a book with that id is not in our database.';
+        throw err;
+  }
 }));
 
 /* (Update/POST) Update existing book entry. */
