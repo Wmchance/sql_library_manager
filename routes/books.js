@@ -22,6 +22,24 @@ router.get('/', asyncHandler(async (req, res) => {
   //res.json(books); //display the books on a webpage
 }));
 
+/* (Read/POST) View books based on search value. */
+router.post('/', asyncHandler(async (req, res) => {
+  let searchVal = req.body.search;
+  let books;
+  if(searchVal === "") {
+    books = await Book.findAll(); 
+    res.render('index', { books });
+  } else {
+    books = await Book.findAll({
+      where: {
+        id: searchVal
+      }
+    });
+    searchVal = "";
+    res.render('index', { books });
+  }
+}));
+
 /* (Read/GET) Create new book form */
 router.get('/new', asyncHandler(async (req, res) => {
   res.render('new-book');
