@@ -20,13 +20,19 @@ block content
                 th Genre 
                 th Year
         tbody 
-        each book in books
+        each book in books.rows
             tr
                 td
                     a(href= `books/${book.id}`)= book.title
                 td= book.author
                 td= book.genre 
                 td= book.year
+    br
+    p
+        - var n = 0;
+        while n < books.count
+            - n+=5
+            a.button(href="/books" id="pageBtn")= n/5
     br
     p 
         a.button(href="/books") Clear Search

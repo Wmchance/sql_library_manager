@@ -16,11 +16,12 @@ function asyncHandler(cb){
   }
 }
 
+//findAndCountAll method returns an object with two properties: count - an integer - the total number records matching the query; rows - an array of objects - the obtained records : https://sequelize.org/docs/v6/core-concepts/model-querying-finders/#findandcountall
+
 /* (Read/GET) View all books table. */
 router.get('/', asyncHandler(async (req, res) => {
-  const books = await Book.findAll(); //get all the books, and store them in a variable
+  const books = await Book.findAndCountAll(); 
   res.render('index', { books });
-  //res.json(books); //display the books on a webpage
 }));
 
 /* (Read/POST) View books based on search value. */
@@ -28,10 +29,10 @@ router.post('/', asyncHandler(async (req, res) => {
   let searchVal = req.body.search;
   let books;
   if(searchVal === "") {
-    books = await Book.findAll(); 
+    books = await Book.findAndCountAll(); 
     res.render('index', { books });
   } else {
-    books = await Book.findAll({
+    books = await Book.findAndCountAll({
       where: {
         [Op.or]: [
           {
