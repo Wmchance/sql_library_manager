@@ -20,31 +20,46 @@ function asyncHandler(cb){
 
 /* (Read/GET) View all books table. */
 router.get('/', asyncHandler(async (req, res) => {
-  let searchVal = req.query.page;
-  // console.log(searchVal);
+  let searchVal = req.query.search || "";
+  console.log(searchVal);
 
   const pageNum = req.query.page;
   const offsetNum = (pageNum-1)*5; 
 
   if(!pageNum || pageNum === 1) {
-    const books = await Book.findAndCountAll({ offset: 0, limit: 5 }); 
+    const books = await Book.findAndCountAll({ 
+      offset: 0, 
+      limit: 5,
+      where: {
+        [Op.or]: [
+          {
+            title: {
+              [Op.substring]: `${searchVal}`
+            }
+          },
+          {
+            author: {
+              [Op.substring]: `${searchVal}`
+            }
+          },
+          {
+            genre: {
+              [Op.substring]: `${searchVal}`
+            }
+          },
+          {
+            year: {
+              [Op.substring]: `${searchVal}`
+            }
+          },
+        ]
+      }
+    }); 
     res.render('index', { books });
   } else {
-    const books = await Book.findAndCountAll({ offset: offsetNum, limit: 5 });
-    res.render('index', { books });
-  }
-}));
-
-/* (Read/POST) View all books table. */
-router.post('/', asyncHandler(async (req, res) => { 
-  const searchVal = req.body.search;
-  console.log(searchVal);
-  let i = 0;
-  if(!searchVal || searchVal === "") {
-    const books = await Book.findAndCountAll(); 
-    res.render('index', { books });
-  } else {
-    const books = await Book.findAndCountAll({
+    const books = await Book.findAndCountAll({ 
+      offset: offsetNum, 
+      limit: 5, 
       where: {
         [Op.or]: [
           {
@@ -73,6 +88,45 @@ router.post('/', asyncHandler(async (req, res) => {
     res.render('index', { books });
   }
 }));
+
+/* (Read/POST) View all books table. */
+// router.post('/', asyncHandler(async (req, res) => { 
+//   const searchVal = req.body.search;
+//   console.log(searchVal);
+//   let i = 0;
+//   if(!searchVal || searchVal === "") {
+//     const books = await Book.findAndCountAll(); 
+//     res.render('index', { books });
+//   } else {
+//     const books = await Book.findAndCountAll({
+//       where: {
+//         [Op.or]: [
+//           {
+//             title: {
+//               [Op.substring]: `${searchVal}`
+//             }
+//           },
+//           {
+//             author: {
+//               [Op.substring]: `${searchVal}`
+//             }
+//           },
+//           {
+//             genre: {
+//               [Op.substring]: `${searchVal}`
+//             }
+//           },
+//           {
+//             year: {
+//               [Op.substring]: `${searchVal}`
+//             }
+//           },
+//         ]
+//       }
+//     });
+//     res.render('index', { books });
+//   }
+// }));
 
 // router.get('/page/:page', asyncHandler(async (req, res) => {
 //   const pageNum = req.params.page || 1;
