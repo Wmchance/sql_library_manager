@@ -7,7 +7,7 @@ block content
 
     br 
 
-    form(action="/books" method="post")
+    form(action=`/books` method="post")
         p
             input(name="search" type="text" id="searchInput")
             input(type="submit" value="Search" id="searchBtn")
@@ -21,6 +21,7 @@ block content
                 th Year
         tbody 
         each book in books.rows
+            - i++;
             tr
                 td
                     a(href= `books/${book.id}`)= book.title
@@ -32,7 +33,8 @@ block content
         - var n = 0;
         while n < books.count
             - n+=5
-            a.button(href="/books" id="pageBtn")= n/5
+            form(action=`/books` method="get")
+                input(type="submit" value=n/5 id="pageBtn" name="page")
     br
     p 
         a.button(href="/books") Clear Search
