@@ -55,7 +55,7 @@ router.get('/', asyncHandler(async (req, res) => {
         ]
       }
     }); 
-    res.render('index', { books });
+    res.render('index', { books, searchVal });
   } else {
     const books = await Book.findAndCountAll({ 
       offset: offsetNum, 
@@ -85,7 +85,7 @@ router.get('/', asyncHandler(async (req, res) => {
         ]
       }
     });
-    res.render('index', { books });
+    res.render('index', { books, searchVal });
   }
 }));
 

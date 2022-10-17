@@ -6,13 +6,15 @@ block content
         a.button(href= 'books/new') Create New Book 
 
     br 
+    if(searchVal)
+        h3= `Searching for: ${searchVal}`
 
     form(action=`/books` method="get")
         p
-            input(name="search" type="text" id="searchInput")
+            input(name="search" type="text" id="searchInput" value=searchVal)
             input(type="submit" value="Search" id="searchBtn")
             br
-            - var n = 0;
+            - let n = 0;
             while n < books.count
                 - n+=5
                 input(name="page" type="submit" value=n/5 id="pageBtn")
@@ -33,13 +35,6 @@ block content
                 td= book.author
                 td= book.genre 
                 td= book.year
-    //- br
-    //- p
-    //-     - var n = 0;
-    //-     while n < books.count
-    //-         - n+=5
-    //-         form(action=`/books` method="get")
-    //-             input(name="page" type="submit" value=n/5 id="pageBtn")
     br
     p 
         a.button(href="/books") Clear Search
