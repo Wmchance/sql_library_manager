@@ -88,53 +88,6 @@ router.get('/', asyncHandler(async (req, res) => {
   }
 }));
 
-/* (Read/POST) View all books table. */
-// router.post('/', asyncHandler(async (req, res) => { 
-//   const searchVal = req.body.search;
-//   console.log(searchVal);
-//   let i = 0;
-//   if(!searchVal || searchVal === "") {
-//     const books = await Book.findAndCountAll(); 
-//     res.render('index', { books });
-//   } else {
-//     const books = await Book.findAndCountAll({
-//       where: {
-//         [Op.or]: [
-//           {
-//             title: {
-//               [Op.substring]: `${searchVal}`
-//             }
-//           },
-//           {
-//             author: {
-//               [Op.substring]: `${searchVal}`
-//             }
-//           },
-//           {
-//             genre: {
-//               [Op.substring]: `${searchVal}`
-//             }
-//           },
-//           {
-//             year: {
-//               [Op.substring]: `${searchVal}`
-//             }
-//           },
-//         ]
-//       }
-//     });
-//     res.render('index', { books });
-//   }
-// }));
-
-// router.get('/page/:page', asyncHandler(async (req, res) => {
-//   const pageNum = req.params.page || 1;
-//   const offsetNum = (pageNum-1)*5; 
-//   const books = await Book.findAndCountAll({ offset: offsetNum, limit: 5 }); 
-//   console.log(req.params.page);
-//   res.render('index', { books });
-// }));
-
 /* (Read/GET) Create new book form */
 router.get('/new', asyncHandler(async (req, res) => {
   res.render('new-book');
