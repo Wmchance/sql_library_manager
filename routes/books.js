@@ -21,7 +21,6 @@ function asyncHandler(cb){
 /* (Read/GET) View all books table. */
 router.get('/', asyncHandler(async (req, res) => {
   let searchVal = req.query.search || "";
-  console.log(searchVal);
 
   const pageNum = req.query.page;
   const offsetNum = (pageNum-1)*5; 
