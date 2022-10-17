@@ -25,7 +25,7 @@ router.get('/', asyncHandler(async (req, res) => {
   const pageNum = req.query.page;
   const offsetNum = (pageNum-1)*5; 
 
-  if(!pageNum || pageNum === 1) {
+  if(!pageNum) {
     const books = await Book.findAndCountAll({ 
       offset: 0, 
       limit: 5,
