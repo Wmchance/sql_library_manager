@@ -11,10 +11,13 @@ block content
 
     form(action=`/books` method="get")
         p
-            input(name="search" type="text" id="searchInput" value=searchVal)
+            //- Setting the input value to the searchVal received from the /books GET route keeps the search value static, allowing for pagination query to be added on top 
+            input(name="search" type="text" id="searchInput" value=searchVal) 
             input(type="submit" value="Search" id="searchBtn")
             br
+            //- Sets the number of pagination buttons to be rendered based on the total books returened
             - let n = 0;
+            //- .count is a built-in property of the 'sequelize' findAndCountAll method. It returns the total number records matching the query
             while n < books.count
                 - n+=5
                 input(name="page" type="submit" value=n/5 id="pageBtn")
@@ -27,6 +30,7 @@ block content
                 th Genre 
                 th Year
         tbody 
+        //- .rows is a built-in property of the 'sequelize' findAndCountAll method. It returns the the obtained records matching the query
         each book in books.rows
             - i++;
             tr

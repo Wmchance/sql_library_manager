@@ -4,6 +4,7 @@ block content
     h1 New Book 
 
     form(action="/books/new" method="post")
+        //- Displays error msg to user if the set sequelize validation produces an error
         if error 
             h2.error Oooops! 
             ul.error

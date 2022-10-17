@@ -20,16 +20,16 @@ function asyncHandler(cb){
 
 /* (Read/GET) View all books table. */
 router.get('/', asyncHandler(async (req, res) => {
-  let searchVal = req.query.search || "";
+  let searchVal = req.query.search || ""; //Pulls the value of the query key 'search', which was set in the searchInput input from the index view
 
-  const pageNum = req.query.page;
-  const offsetNum = (pageNum-1)*5; 
+  const pageNum = req.query.page; //Pulls the value of the query key 'page', which was set in the pageBtn input from the index view
+  const offsetNum = (pageNum-1)*5; //Sets the offset value to use when pulling rows from the database
 
-  if(!pageNum) {
+  if(!pageNum) { //Allows for rendering of route when first loading and a page num has yet to be added
     const books = await Book.findAndCountAll({ 
       offset: 0, 
       limit: 5,
-      where: {
+      where: { //Provides the db with the a value to use to match & pull in rows with
         [Op.or]: [
           {
             title: {
@@ -54,8 +54,8 @@ router.get('/', asyncHandler(async (req, res) => {
         ]
       }
     }); 
-    res.render('index', { books, searchVal });
-  } else {
+    res.render('index', { books, searchVal }); //Passing the searchVal through the render route lets it be stored in index.pug. With the value stored, pagination and be added to searched results.
+  } else { //Allows for rendering of route after a page num has been added
     const books = await Book.findAndCountAll({ 
       offset: offsetNum, 
       limit: 5, 
@@ -84,7 +84,7 @@ router.get('/', asyncHandler(async (req, res) => {
         ]
       }
     });
-    res.render('index', { books, searchVal });
+    res.render('index', { books, searchVal }); //Passing the searchVal through the render route lets it be stored in index.pug. With the value stored, pagination and be added to searched results.
   }
 }));
 
@@ -100,7 +100,7 @@ router.post('/new', asyncHandler(async (req, res) => {
     newBook = await Book.create(req.body);
     res.redirect("/books/" + newBook.id);
   } catch (error) {
-    if(error.name === "SequelizeValidationError") {
+    if(error.name === "SequelizeValidationError") { //Displays error msg to user if they haven't added a title or author
       res.render('new-book', { error })
     } else {
       throw error;
@@ -130,7 +130,7 @@ router.post('/:id', asyncHandler(async (req, res) => {
     await book.update(req.body);
     res.render('update-book', { book });
   } catch (error) {
-    if(error.name === "SequelizeValidationError") {
+    if(error.name === "SequelizeValidationError") { //Displays error msg to user if they haven't added a title or author
       res.render('update-book', { book, error })
     } else {
       throw error;
@@ -142,7 +142,7 @@ router.post('/:id', asyncHandler(async (req, res) => {
 router.post('/:id/delete', asyncHandler(async (req ,res) => {
   const book = await Book.findByPk(req.params.id);
   if(book) {
-    await book.destroy();
+    await book.destroy(); //Deletes book from db
     res.redirect("/books");
   } else {
     res.sendStatus(404);
